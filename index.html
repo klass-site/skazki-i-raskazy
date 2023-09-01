@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Fillword implementation">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="fillword">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>teachersday-34-2</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = '3298957653';
+  </script>
+  <script>
+    function playAudio(file) {
+      window.audioAsset = new Audio('assets/'+file);
+      window.audioAsset.play();
+    }
+
+    function currentAudioTime() {
+      return window.audioAsset.currentTime;
+    }
+
+    function totalAudioTime() {
+      return window.audioAsset.duration;
+    }
+
+    function stopAudio() {
+      if (interval!=0) {
+        clearInterval(interval);
+      }
+      window.audioAsset.pause();
+    }
+
+    var interval;
+
+    function fadeOutAudio() {
+      var volume = 1;
+      interval = setInterval(function() {
+        volume-=0.1;
+        if (volume<=0) {
+          clearInterval(interval);
+          interval = 0;
+          window.audioAsset.pause();
+        } else {
+          window.audioAsset.volume = volume;
+        }
+      }, 50);
+    }
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+</head>
+<body>
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function(engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function(appRunner) {
+        return appRunner.runApp();
+      });
+    });
+  </script>
+</body>
+</html>
